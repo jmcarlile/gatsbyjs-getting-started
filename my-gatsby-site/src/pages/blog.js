@@ -14,12 +14,16 @@ const BlogPage = ({data}) => {
             <ul>
             {
                 data.allMarkdownRemark.edges.map(({node}) =>(
-                    // console.log(node.node.excerpt)
-                    <li key={node.frontmatter.id} className={blogListItem}>
+                    <li key={node.id} className={blogListItem}>
                         <h3 className={blogHeader}>
                             {node.frontmatter.title} 
                             <span className={blogDate}> - {node.frontmatter.date}</span>
                         </h3>
+                        {/* <p>heelo</p> */}
+                        <p>
+                            {node.excerpt}
+                        </p>
+                        <hr />
                     </li>
                 ))
             }
@@ -30,7 +34,7 @@ const BlogPage = ({data}) => {
 
 export const query = graphql`
   query {
-    allMarkdownRemark {
+    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       totalCount
       edges {
         node {
