@@ -1,6 +1,11 @@
 import * as React from 'react'
 import {graphql} from 'gatsby'
 import Layout from '../components/layout'
+import {
+    blogHeader,
+    blogDate,
+    blogListItem,
+} from './blog.module.css'
 
 const BlogPage = ({data}) => {
 
@@ -8,9 +13,13 @@ const BlogPage = ({data}) => {
         <Layout pageTitle="My Blog Posts">
             <ul>
             {
-                data.allFile.nodes.map(node =>(
-                    <li key={node.name}>
-                        {node.name}
+                data.allMarkdownRemark.edges.map(({node}) =>(
+                    // console.log(node.node.excerpt)
+                    <li key={node.frontmatter.id} className={blogListItem}>
+                        <h3 className={blogHeader}>
+                            {node.frontmatter.title} 
+                            <span className={blogDate}> - {node.frontmatter.date}</span>
+                        </h3>
                     </li>
                 ))
             }
@@ -20,13 +29,21 @@ const BlogPage = ({data}) => {
 }
 
 export const query = graphql`
-    query MyQuery {
-        allFile {
-        nodes {
-            name
+  query {
+    allMarkdownRemark {
+      totalCount
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            date(formatString: "DD MMMM, YYYY")
+          }
+          excerpt
         }
-        }
+      }
     }
+  }
 `
 
 export default BlogPage

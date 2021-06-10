@@ -1,0 +1,10 @@
+.blog-header {
+    margin-bottom: 1rem;
+    color: rgb(53, 53, 53);
+}
+.blog-date {
+    color: #666;
+}
+.blog-list-item {
+    list-style-type: "\1F4DD" ;
+}
